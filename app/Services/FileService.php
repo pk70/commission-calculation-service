@@ -6,7 +6,12 @@ use Illuminate\Support\Facades\Response;
 
 class FileService
 {
-    public function accessFileCsv()
+    /**
+     * Get input csv file for read.
+     *
+     * @return array
+     */
+    public function accessFileCsv(): array
     {
         $input_array = [];
 
@@ -22,17 +27,25 @@ class FileService
         $input_array = array_filter($input_array);
         return $input_array;
     }
-    public function writeFileCsv(array $data)
+    /**
+     * Write csv file from data.
+     *@param array
+     */
+    public function writeFileCsv(array $data): void
     {
-
         if (($file = fopen(storage_path() . "/output.csv", "w")) !== false) {
             fputcsv($file, $data, "\n");
             fclose($file);
         }
     }
+    /**
+     * Download csv file.
+     *
+     * @return Response
+     */
     public function downloadFile()
     {
-        $file=storage_path() . "/output.csv";
+        $file = storage_path() . "/output.csv";
         return Response::download($file, 'output.csv');
     }
 }

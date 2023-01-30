@@ -2,8 +2,6 @@
 
 namespace App\Services;
 
-
-
 class CurrencyExchangeService
 {
     private $rate_array = [];
@@ -34,8 +32,12 @@ class CurrencyExchangeService
             $this->rate_array = $data['rates'];
         }
     }
-
-    public function getRateByCurrency($currency)
+    /**
+     * Currency conversion.
+     * @param string
+     * @return array
+     */
+    public function getRateByCurrency($currency): array
     {
         if (array_key_exists($currency, $this->rate_array)) {
 

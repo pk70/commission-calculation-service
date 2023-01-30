@@ -6,8 +6,6 @@ use App\Services\DepositService;
 use App\Services\WithdrawService;
 use App\Services\FileService;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Request;
-use Illuminate\Support\Facades\Session;
 use App\Services\CurrencyExchangeService;
 
 
@@ -20,23 +18,26 @@ class CommissionController extends Controller
     public $deposit_service_data = [];
     public $withdraw_service_data = [];
     public $withdrawService;
+    public $depositService;
     public $final_deposit_array = [];
     public $final_withdraw_array = [];
     public $expected_final_array = [];
 
-    public function __construct(FileService $fileAccess, WithdrawService $withdrawServices)
+    public function __construct(FileService $fileAccess, WithdrawService $withdrawServices, DepositService $depositServices)
     {
-        //Session::forget('userArray');
-        Session::put('userArray', []);
         $this->file = $fileAccess->accessFileCsv();
         $this->file_write = $fileAccess;
         $this->withdrawService = $withdrawServices;
+        $this->depositService = $depositServices;
     }
 
-
+    /**
+     * Generate user wise array.
+     *
+     * @return array
+     */
     public function index()
     {
-
         foreach ($this->file as $key => $value) {
             if ($value[3] == 'withdraw') {
                 $this->withdraw[] = $value;
@@ -45,8 +46,8 @@ class CommissionController extends Controller
                 $this->deposit[] = $value;
             }
         }
-        $depositServiceData = new DepositService();
-        $this->final_deposit_array = $this->handleDepositService($depositServiceData);
+
+        $this->final_deposit_array = $this->handleDepositService();
 
         $this->final_withdraw_array = $this->handleWithdrawService();
 
@@ -68,26 +69,42 @@ class CommissionController extends Controller
         return $this->expectedOutput($this->expected_final_array);
     }
 
-    public function handleDepositService($depositServiceData)
+    /**
+     * Handle deposit transaction with deposit service.
+     *
+     * @return array
+     */
+    public function handleDepositService()
     {
-        $this->deposit_service_data = $depositServiceData->depositRule($this->deposit);
+        $this->deposit_service_data = $this->depositService->depositRule($this->deposit);
         return $this->deposit_service_data;
     }
 
-    public function handleWithdrawService()
+    /**
+     * Handle withdraw transaction with withdraw service.
+     *
+     * @return array
+     */
+    public function handleWithdrawService(): array
     {
-
         $this->withdraw_service_data = $this->withdrawService->withdrawRule($this->withdraw);
-
         return $this->withdraw_service_data;
     }
-
-    public function ExpectedDataFormat($data)
+    /**
+     * Formatting data as expected.
+     * @param  array
+     * @return string
+     */
+    public function ExpectedDataFormat(array $data): string
     {
-
         return $data[6];
     }
-    public function expectedOutput($data)
+    /**
+     * Formatting data as expected.
+     * @param  array
+     * @return array
+     */
+    public function expectedOutput(array $data): array
     {
         foreach ($data as $value) {
             $arr[] = $value;
@@ -95,8 +112,13 @@ class CommissionController extends Controller
         return $arr;
     }
 
+    /**
+     * Currency conversion.
+     * @param float,string
+     * @return float
+     */
 
-    public function convertCurrent($amount, $currency)
+    public function convertCurrent(float $amount, string $currency): float
     {
         $exchange_rate = new CurrencyExchangeService();
         $exchange_rate = $exchange_rate->getRateByCurrency($currency);
