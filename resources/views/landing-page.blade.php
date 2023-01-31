@@ -57,6 +57,10 @@
     <a target="_blank" href="{{ route('output') }}"><button type="button" class="text-success btn">Calculation with existing file</button></a>
 
 </div>
+<br /><br />
+<div class="form-group">
+    <a target="_blank" href="{{ route('downloadCsv') }}"><button type="button" class="text-info btn">Download calculated Csv</button></a>
+</div>
 </div>
 
 </div>
