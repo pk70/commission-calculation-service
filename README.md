@@ -1,8 +1,7 @@
 # Homework assignment
 ## Requirements
-- PHP version =>7.3<8.0
-- Composer
-- PHP cURL extension  
+1. [x] PHP 7.4 minimum.
+2. [x] Composer.
 
 ### Setup project in localhost
 - Download file from git (git clone https://github.com/pk70/commission-calculation-service.git)
