@@ -42,6 +42,15 @@
         </ul>
     </div>
 @endif
+@if (\Request::get('message'))
+    <div class="alert alert-danger">
+        <ul>
+          @foreach (\Request::get('message') as $msg)
+              {{ $msg }}
+          @endforeach
+        </ul>
+    </div>
+@endif
 <form action="{{ route('upload') }}" method="post" enctype="multipart/form-data">
 {{ csrf_field() }}
 

@@ -42,6 +42,6 @@ class HomeController extends Controller
         }
 
         $file->move(storage_path(), $file->getClientOriginalName());
-        return redirect('/')->with('message', "File uploaded successfully");
+        return redirect()->route('index', ['message' => [0=>'File uploaded successfully']]);
     }
 }
