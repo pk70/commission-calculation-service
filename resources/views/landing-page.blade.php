@@ -45,7 +45,7 @@
 <form action="{{ route('upload') }}" method="post" enctype="multipart/form-data">
 {{ csrf_field() }}
 
-<label for="Input file">(Only except csv formated file):</label>
+<label for="Input file">(Only support csv file. Upoad expected formated file):</label>
 <br />
 <input type="file" class="form-control" name="input_csv" />
 <br /><br />

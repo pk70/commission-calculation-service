@@ -34,7 +34,13 @@ class HomeController extends Controller
         if ($validator->fails()) {
             return redirect()->route('index', ['errors' => $validator->errors()->all()]);
         }
+
         $file = $request->file('input_csv');
+
+        if($file->getClientOriginalName()!='input.csv'){
+            return redirect()->route('index', ['errors' => [0=>'file name must be input.csv']]);
+        }
+
         $file->move(storage_path(), $file->getClientOriginalName());
         return redirect('/')->with('message', "File uploaded successfully");
     }
