@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Services\FileService;
 use App\Services\DepositService;
 use App\Services\WithdrawService;
@@ -12,21 +11,21 @@ use App\Services\CurrencyExchangeService;
 class CommissionController extends Controller
 {
     public $file = [];
-    public $file_write;
+    public $fileWrite;
     public $deposit = [];
     public $withdraw = [];
-    public $deposit_service_data = [];
+    public $depositServiceData = [];
     public $withdraw_service_data = [];
     public $withdrawService;
     public $depositService;
-    public $final_deposit_array = [];
-    public $final_withdraw_array = [];
-    public $expected_final_array = [];
+    public $finalDepositArray = [];
+    public $finalWithdrawArray = [];
+    public $expectedFinalArray = [];
 
     public function __construct(FileService $fileAccess, WithdrawService $withdrawServices, DepositService $depositServices)
     {
         $this->file = $fileAccess->accessFileCsv();
-        $this->file_write = $fileAccess;
+        $this->fileWrite = $fileAccess;
         $this->withdrawService = $withdrawServices;
         $this->depositService = $depositServices;
     }
@@ -47,11 +46,11 @@ class CommissionController extends Controller
             }
         }
 
-        $this->final_deposit_array = $this->handleDepositService();
+        $this->finalDepositArray = $this->handleDepositService();
 
-        $this->final_withdraw_array = $this->handleWithdrawService();
+        $this->finalWithdrawArray = $this->handleWithdrawService();
 
-        $final_array = array_merge($this->final_withdraw_array, $this->final_deposit_array);
+        $final_array = array_merge($this->finalWithdrawArray, $this->finalDepositArray);
         foreach ($this->file as $key => $value) {
             foreach ($final_array as $key1 => $value1) {
                 if (
@@ -61,12 +60,12 @@ class CommissionController extends Controller
                     if ($value1[5] != 'EUR') {
                         $value1[6] = $this->convertCurrent($value1[6], $value1[5]);
                     }
-                    $this->expected_final_array[$key] = $this->ExpectedDataFormat($value1);
+                    $this->expectedFinalArray[$key] = $this->ExpectedDataFormat($value1);
                 }
             }
         }
-        $this->file_write->writeFileCsv($this->expected_final_array);
-        return $this->expectedOutput($this->expected_final_array);
+        $this->fileWrite->writeFileCsv($this->expectedFinalArray);
+        return $this->expectedOutput($this->expectedFinalArray);
     }
 
     /**
@@ -77,8 +76,8 @@ class CommissionController extends Controller
 
     public function handleDepositService()
     {
-        $this->deposit_service_data = $this->depositService->depositRule($this->deposit);
-        return $this->deposit_service_data;
+        $this->depositServiceData = $this->depositService->depositRule($this->deposit);
+        return $this->depositServiceData;
     }
 
     /**

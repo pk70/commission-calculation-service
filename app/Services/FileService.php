@@ -16,8 +16,8 @@ class FileService
     {
         $input_array = [];
 
-        if(!file_exists(storage_path() . "/input.csv")){
-          return null;
+        if (!file_exists(storage_path() . "/input.csv")) {
+            return null;
         }
 
         if (($open = fopen(storage_path() . "/input.csv", "r")) !== false) {

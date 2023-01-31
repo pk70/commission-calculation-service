@@ -6,7 +6,7 @@ use App\Services\Interfaces\DepositInterface;
 
 class DepositService implements DepositInterface
 {
-    private $deposit_charge = 0.03;
+    private $depositCharge = 0.03;
 
     public function __construct()
     {
@@ -21,7 +21,7 @@ class DepositService implements DepositInterface
     public function depositRule(array $data): array
     {
         foreach ($data as $key => $value) {
-            $value[6] = (float)round(($this->deposit_charge / 100) * $value[4], 1);
+            $value[6] = (float)round(($this->depositCharge / 100) * $value[4], 1);
             $newArray[] = $value;
         }
         return $newArray;

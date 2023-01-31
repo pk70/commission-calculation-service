@@ -17,10 +17,4 @@ class InputFileTest extends TestCase
         $this->assertFileExists($file, "File exists");
     }
 
-    public function test_download_page()
-    {
-        $response = $this->get('/download-csv');
-
-        $response->assertStatus(200);
-    }
 }

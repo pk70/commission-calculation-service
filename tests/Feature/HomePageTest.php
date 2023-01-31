@@ -18,4 +18,17 @@ class HomePageTest extends TestCase
 
         $response->assertStatus(200);
     }
+
+    /**
+     * Testing landing page.
+     *
+     * @return void
+     */
+
+     public function test_landing_page()
+     {
+         $response = $this->get('/');
+
+         $response->assertStatus(200);
+     }
 }

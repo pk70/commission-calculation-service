@@ -4,7 +4,7 @@ namespace App\Services;
 
 class WithdrawService
 {
-    private $exchange_rate;
+    private $exchangeRate;
     private $userOperationArray = [];
     private $sessionUserArray = [];
 
@@ -157,9 +157,9 @@ class WithdrawService
         foreach ($data as $key => $value) {
 
             if ($value[5] != 'EUR') {
-                $exchange_rate = new CurrencyExchangeService();
-                $this->exchange_rate = $exchange_rate->getRateByCurrency($value[5]);
-                $value[4] = number_format($value[4] / $this->exchange_rate, 2, '.', '');
+                $exchangeRate = new CurrencyExchangeService();
+                $this->exchangeRate = $exchangeRate->getRateByCurrency($value[5]);
+                $value[4] = number_format($value[4] / $this->exchangeRate, 2, '.', '');
             }
 
             $this->userOperationArray[$value[1]][] = $value;

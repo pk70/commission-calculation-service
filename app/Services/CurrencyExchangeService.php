@@ -4,7 +4,7 @@ namespace App\Services;
 
 class CurrencyExchangeService
 {
-    private $rate_array = [];
+    private $rateArray = [];
     public function __construct()
     {
         try {
@@ -24,7 +24,7 @@ class CurrencyExchangeService
             curl_close($ch);
             $data = json_decode($result, true);
             if (isset($data['rates'])) {
-                $this->rate_array = $data['rates'];
+                $this->rateArray = $data['rates'];
             }
         } catch (\Throwable $th) {
             throw $th->getMessage();
@@ -39,8 +39,8 @@ class CurrencyExchangeService
 
     public function getRateByCurrency($currency): float
     {
-        if (array_key_exists($currency, $this->rate_array)) {
-            return $this->rate_array[$currency];
+        if (array_key_exists($currency, $this->rateArray)) {
+            return $this->rateArray[$currency];
         }
     }
 }

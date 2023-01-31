@@ -2,9 +2,11 @@
 ## Requirements
 1. [x] PHP 7.4 minimum.
 2. [x] Composer.
+3. PHPUnit 9.5.28
 
 ### Setup project in localhost
-- Download file from git (git clone https://github.com/pk70/commission-calculation-service.git)
+- Project url in github `https://github.com/pk70/commission-calculation-service`
+- Download file from git or `git clone https://github.com/pk70/commission-calculation-service.git`
 - Go to project folder and open terminal
 - Run command `composer update`
 - Make sure .env file is in root folder
@@ -31,7 +33,11 @@
 
 ### PHP Unit test
 - Run command  `./vendor/bin/phpunit` in project terminal for unit testing result.
-
+- For specific test  `./vendor/bin/phpunit --filter HomePageTest` in project terminal for unit testing result.
+- The were 3 feature test class 
+1.HomePageTest where two methood for testing `test_landing_page,test_download_page`(landing page and download csv testing)
+2.CalculationTest where one method for testing `test_calculation_by_csv_array` (existing csv file get calculated expected output testing)
+3.InputFileTest where one method for testing `test_input_file_exists` (input.csv existing testing)
 
 ### Technology used
 - Laravel framework version 8
