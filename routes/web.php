@@ -11,12 +11,16 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Route::group(['middleware' => ['web']], function () {
+Route::controller(App\Http\Controllers\HomeController::class)->group(function () {
+    Route::get('/', 'index')->name('index');
+    Route::post('/upload', 'upload')->name('upload');
+});
 Route::controller(App\Http\Controllers\CommissionController::class)->group(function () {
-    Route::get('/output', 'index')->name('index');
-    Route::get('/output-csv', 'outputCsvFile')->name('outputCsvFile');
+    Route::get('/output', 'output')->name('output');
 });
 Route::controller(App\Services\FileService::class)->group(function () {
     Route::get('/download-csv', 'downloadFile')->name('downloadCsv');
+});
 });
 

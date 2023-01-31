@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
+use App\Services\FileService;
 use App\Services\DepositService;
 use App\Services\WithdrawService;
-use App\Services\FileService;
 use App\Http\Controllers\Controller;
 use App\Services\CurrencyExchangeService;
-
 
 class CommissionController extends Controller
 {
@@ -36,7 +36,7 @@ class CommissionController extends Controller
      *
      * @return array
      */
-    public function index()
+    public function output():array
     {
         foreach ($this->file as $key => $value) {
             if ($value[3] == 'withdraw') {
@@ -74,6 +74,7 @@ class CommissionController extends Controller
      *
      * @return array
      */
+
     public function handleDepositService()
     {
         $this->deposit_service_data = $this->depositService->depositRule($this->deposit);
@@ -85,25 +86,30 @@ class CommissionController extends Controller
      *
      * @return array
      */
+
     public function handleWithdrawService(): array
     {
         $this->withdraw_service_data = $this->withdrawService->withdrawRule($this->withdraw);
         return $this->withdraw_service_data;
     }
+
     /**
      * Formatting data as expected.
      * @param  array
      * @return string
      */
+
     public function ExpectedDataFormat(array $data): string
     {
         return $data[6];
     }
+
     /**
      * Formatting data as expected.
      * @param  array
      * @return array
      */
+
     public function expectedOutput(array $data): array
     {
         foreach ($data as $value) {

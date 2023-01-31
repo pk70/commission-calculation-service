@@ -11,9 +11,14 @@ class FileService
      *
      * @return array
      */
-    public function accessFileCsv(): array
+
+    public function accessFileCsv(): ?array
     {
         $input_array = [];
+
+        if(!file_exists(storage_path() . "/input.csv")){
+          return null;
+        }
 
         if (($open = fopen(storage_path() . "/input.csv", "r")) !== false) {
             while (($data = fgetcsv($open, 1000, ",")) !== false) {
@@ -27,10 +32,12 @@ class FileService
         $input_array = array_filter($input_array);
         return $input_array;
     }
+
     /**
      * Write csv file from data.
      *@param array
      */
+
     public function writeFileCsv(array $data): void
     {
         if (($file = fopen(storage_path() . "/output.csv", "w")) !== false) {
@@ -38,11 +45,13 @@ class FileService
             fclose($file);
         }
     }
+
     /**
      * Download csv file.
      *
      * @return Response
      */
+
     public function downloadFile()
     {
         $file = storage_path() . "/output.csv";

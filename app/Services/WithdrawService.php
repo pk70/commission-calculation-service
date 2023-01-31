@@ -14,9 +14,10 @@ class WithdrawService
 
     /**
      * Calculating withdraw transaction.
-     *@param array
+     * @param array
      * @return array
-     */
+    */
+
     public function withdrawRule(array $data): array
     {
         $this->operationPerUser($data);
@@ -133,7 +134,7 @@ class WithdrawService
 
     /**
      * Getting number of day from date range.
-     *@param string,string
+     * @param string,string
      * @return int
      */
 
@@ -141,9 +142,7 @@ class WithdrawService
     {
         $tow = \Carbon\Carbon::createFromFormat('Y-m-d', $to);
         $fromw = \Carbon\Carbon::createFromFormat('Y-m-d', $from);
-
         $diff_in_days = $tow->diffInDays($fromw);
-
         return $diff_in_days;
     }
 
@@ -152,6 +151,7 @@ class WithdrawService
      * @param array
      *
      */
+
     public function operationPerUser(array $data): void
     {
         foreach ($data as $key => $value) {

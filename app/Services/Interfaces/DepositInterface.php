@@ -2,8 +2,8 @@
 
 namespace App\Services\Interfaces;
 
-interface DepositInterface{
-
+interface DepositInterface
+{
     public function depositRule(array $array);
 }
 

@@ -17,6 +17,7 @@ class DepositService implements DepositInterface
      * @param array
      * @return array
      */
+
     public function depositRule(array $data): array
     {
         foreach ($data as $key => $value) {
