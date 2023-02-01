@@ -3,6 +3,7 @@
 1. [x] PHP 7.4 minimum.
 2. [x] Composer.
 3. [x] PHPUnit 9.5.28
+4. [x] Enable cURL PHP extension
 
 ### Setup project in localhost
 - Project url in github `https://github.com/pk70/commission-calculation-service`
